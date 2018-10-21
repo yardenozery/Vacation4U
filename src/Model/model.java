@@ -5,12 +5,16 @@ import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 public class model implements Imodel {
-    @Override
-    public void CreateDB() {
+
+    Users user;
+    public model() {
+        user = new Users();
+        this.CreateDB();
+    }
+
+    private void CreateDB() {
         //String url = "jdbc:sqlite:C:/sqlite/db/MyDB";
         String url = "jdbc:sqlite:MyDB";
 
@@ -45,7 +49,7 @@ public class model implements Imodel {
         }
     }
 
-    private Connection connect() {
+    protected static Connection connect() {
         // SQLite connection string
         String url = "jdbc:sqlite:MyDB";
         Connection conn = null;
@@ -58,56 +62,24 @@ public class model implements Imodel {
     }
 
     @Override
-    public void CreateNewUser(String username,String password,String dateOfBirth,String firstName,String lastName,String city) {
-        String sql = "INSERT INTO Users(username,password,dateOfBirth,firstName,lastName,city) VALUES(?,?,?,?,?,?)";
-        try (Connection conn = this.connect();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-                    pstmt.setString(1, username);
-                    pstmt.setString(2, password);
-                    pstmt.setString(3, dateOfBirth);
-                    pstmt.setString(4, firstName);
-                    pstmt.setString(5, lastName);
-                    pstmt.setString(6, city);
-                    pstmt.executeUpdate();
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-
+    public void CreateNewUser(String username, String password, String dateOfBirth, String firstName, String lastName, String city) {
+        user.CreateNewUser(username, password, dateOfBirth, firstName, lastName, city);
     }
 
     @Override
     public String[] ReadUser(String usr) {
-        String sql = "SELECT username, password, dateOfBirth, firstName, lastName, city FROM Users WHERE username = ?";
-        try (Connection conn = this.connect();
-             PreparedStatement pstmt  = conn.prepareStatement(sql)){
-
-            // set the value
-            pstmt.setString(1,usr);
-            ResultSet rs  = pstmt.executeQuery();
-            String[] res = new String[6];
-            res[0] = rs.getString(1);
-            res[1] = rs.getString(2);
-            res[2] = rs.getString(3);
-            res[3] = rs.getString(4);
-            res[4] = rs.getString(5);
-            res[5] = rs.getString(6);
-            return res;
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return null;
-
+        return user.ReadUser(usr);
     }
 
     @Override
-    public void UpdateUser() {
+    public void UpdateUser(String username, String password, String dateOfBirth, String firstName, String lastName, String city) {
 
+        user.UpdateUser(username,  password, dateOfBirth, firstName, lastName, city);
     }
 
     @Override
-    public void DeleteUser() {
+    public void DeleteUser(String userName) {
+        user.DeleteUser(userName);
 
     }
 }

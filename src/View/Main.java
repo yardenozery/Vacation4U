@@ -21,12 +21,14 @@ public class Main extends Application {
     public static void main(String[] args) {
         //launch(args);
         model m = new model();
-        m.CreateDB();
-        m.CreateNewUser("alon123", "123456", "5/12/94", "alon", "fat", "ness ziona");
-        m.CreateNewUser("aa", "123456", "5/12/94", "alon", "fat", "ness ziona");
-        String[] a = m.ReadUser("aa");
-        for(int i=0; i<a.length; i++){
-            System.out.println(a[i]);
-        }
+        //m.CreateNewUser("alon123", "123456", "5/12/94", "alon", "fat", "ness ziona");
+        //m.CreateNewUser("aa", "123456", "5/12/94", "alon", "fat", "ness ziona");
+        //String[] a = m.ReadUser("aa");
+        //for(int i=0; i<a.length; i++){
+        //    System.out.println(a[i]);
+        //}
+        //m.UpdateUser("aa", "12345678", "5/12/94", "alon", "fat", "ness ziona");
+        //m.DeleteUser("aa");
+
     }
 }
